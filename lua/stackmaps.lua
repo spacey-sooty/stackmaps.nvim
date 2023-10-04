@@ -24,11 +24,15 @@ M.push = function(name, mode, mappings)
 		local existing = find_mappings(maps, lhs)
 
 		if existing then
-			table.insert(existing_maps, existing)
+			existing_maps[lhs] = existing
 		end
 	end
 
-	M._stack[name] = existing_maps
+	M._stack[name] = {
+		mode = mode,
+		existing = existing_maps,
+		mappings = mappings,
+		}
 
 	for lhs, rhs in pairs(mappings) do
 		-- todo: need some way to pass options
@@ -43,15 +47,26 @@ end
 -- })
 
 -- test
-M.push('debug_mode', 'n', {
-	[" pf"] = "echo 'Hello'",
- 	[" sz"] = "echo 'Lol'",
-})
 
 M.pop = function(name)
+	local state = M._stack[name]
+	M._stack[name] = nil
+
+	for lhs, rhs in pairs(state.mappings) do
+		if state.existing[lhs] then
+			-- handle mappings that existed
+			local og = state.existing[lhs]
+			-- TODO: Handle options from the table
+			vim.keymap.set(state.mode, lhs, og_mapping.rhs)
+		else
+			-- handle mappings that didnt existed
+			vim.keymap.del(state.mode, lhs)
+		end
+	end
+	
 end
 
--- reset debug mode keybinding
+-- reset keybindings under debug mode 
 -- M.pop('debug_mode')
 
 return M
