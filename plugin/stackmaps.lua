@@ -16,6 +16,8 @@ local find_mappings = function(maps, lhs)
 	end
 end
 
+M._stack = {}
+
 M.push = function(name, mode, mappings) 
 	local maps = api.nvim_get_keymap(mode)
 
@@ -27,6 +29,8 @@ M.push = function(name, mode, mappings)
 			table.insert(existing_maps, existing)
 		end
 	end
+
+	M._stack[name] = existing_maps
 end
 
 -- temporarily create keybindings in normal mode with name debug_mode
