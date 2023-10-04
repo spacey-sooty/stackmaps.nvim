@@ -10,7 +10,11 @@ M.push = function(name, mappings)
 end
 
 -- temporarily create debug mode keybinding to dm
--- M.push('debug_mode', dm)
+-- M.push('debug_mode', {
+-- 	mode: 
+-- 	mapping:
+-- 	value
+-- })
 
 M.pop = function(name)
 end
