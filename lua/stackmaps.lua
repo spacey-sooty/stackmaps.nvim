@@ -31,11 +31,16 @@ M.push = function(name, mode, mappings)
 	end
 
 	M._stack[name] = existing_maps
+
+	for lhs, rhs in pairs(mappings) do
+		-- todo: need some way to pass options
+		keymap.set(mode, lhs, rhs)
+	end
 end
 
 -- temporarily create keybindings in normal mode with name debug_mode
 -- M.push('debug_mode', 'n', {
--- 	["<leader>st"] = "echo 'Hello'",
+-- 	["<leader>pf"] = "echo 'Hello'",
 -- 	["<leader>sz"] = "echo 'Lol'",
 -- })
 
