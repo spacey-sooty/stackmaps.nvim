@@ -1,6 +1,4 @@
 local M = {}
-local api = vim.api
-local keymap = vim.keymap
 
 -- functions we need:
 -- vim.keymap.set()
@@ -19,7 +17,7 @@ end
 M._stack = {}
 
 M.push = function(name, mode, mappings) 
-	local maps = api.nvim_get_keymap(mode)
+	local maps = vim.api.nvim_get_keymap(mode)
 
 	local existing_maps = {}
 	for lhs, rhs in pairs(mappings) do
@@ -34,7 +32,7 @@ M.push = function(name, mode, mappings)
 
 	for lhs, rhs in pairs(mappings) do
 		-- todo: need some way to pass options
-		keymap.set(mode, lhs, rhs)
+		vim.keymap.set(mode, lhs, rhs)
 	end
 end
 
