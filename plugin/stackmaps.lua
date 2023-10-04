@@ -9,11 +9,10 @@ local keymap = vim.keymap
 M.push = function(name, mappings) 
 end
 
--- temporarily create debug mode keybinding to dm
--- M.push('debug_mode', {
--- 	mode: 
--- 	mapping:
--- 	value
+-- temporarily create debug mode keybinding in normal mode
+-- M.push('debug_mode', 'n', {
+-- 	["<leader>st"] = "echo 'Hello'",
+-- 	["<leader>sz"] = "echo 'Lol'",
 -- })
 
 M.pop = function(name)
